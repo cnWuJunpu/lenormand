@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#d4af37">
+  <meta name="description" content="Lenormand Spread Tool - 雷诺曼牌阵排布工具">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="雷诺曼牌阵">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>雷诺曼牌阵 - Lenormand Spread Tool</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-512.svg">
+  <link rel="icon" type="image/svg+xml" sizes="512x512" href="icons/icon-512.svg">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1 class="app-title">雷诺曼牌阵</h1>
+      <p class="app-subtitle">Lenormand Spread Tool</p>
+    </header>
+
+    <div class="controls">
+      <div class="control-group">
+        <span class="control-label">牌阵:</span>
+        <div class="spread-buttons">
+          <button class="spread-btn" data-spread="three">三张牌阵</button>
+          <button class="spread-btn" data-spread="five">五张牌阵</button>
+          <button class="spread-btn" data-spread="nine">九宫牌阵</button>
+          <button class="spread-btn active" data-spread="grandTableau">大桌牌阵(36张)</button>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button class="action-btn random" id="randomBtn">随机抽牌</button>
+        <button class="action-btn screenshot" id="screenshotBtn">截图保存</button>
+        <button class="action-btn clear" id="clearBtn">清空牌阵</button>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="spread-area">
+        <div class="spread-header">
+          <span class="spread-name" id="spreadName">大桌牌阵(36张)</span>
+          <span class="selected-hint" id="selectedHint"></span>
+        </div>
+        <div class="spread-container-wrapper" id="spreadContainerWrapper">
+          <div class="spread-container" id="spreadContainer"></div>
+        </div>
+        
+        <div class="notes-section">
+          <label class="notes-label">解读笔记</label>
+          <textarea 
+            id="notesInput"
+            class="notes-input" 
+            placeholder="在此输入解读笔记..."
+            rows="4"
+          ></textarea>
+        </div>
+      </div>
+
+      <aside class="deck-panel">
+        <div class="card-deck">
+          <h3 class="deck-title">牌库</h3>
+          <div class="deck-legend">
+            <span class="legend-item positive">积极</span>
+            <span class="legend-item neutral">中性</span>
+            <span class="legend-item negative">消极</span>
+          </div>
+          <div class="deck-grid" id="deckGrid"></div>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="app-footer">
+      <p>拖拽或点击选择牌，放置到牌阵中</p>
+    </footer>
+
+    <div class="preview-overlay" id="previewOverlay">
+      <div class="preview-modal">
+        <div class="preview-header">
+          <h3>截图预览</h3>
+          <button class="preview-close" id="previewClose">×</button>
+        </div>
+        <div class="preview-content">
+          <img id="previewImage" alt="截图预览" class="preview-image" />
+        </div>
+        <div class="preview-options">
+          <label class="checkbox-label">
+            <input type="checkbox" id="includeNotes" checked />
+            <span>包含解读笔记</span>
+          </label>
+        </div>
+        <div class="preview-actions">
+          <button class="preview-btn cancel" id="previewCancel">取消</button>
+          <button class="preview-btn download" id="previewDownload">下载</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((registration) => {
+            console.log('SW registered:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('SW registration failed:', error);
+          });
+      });
+    }
+  </script>
+</body>
+</html>

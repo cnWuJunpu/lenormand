@@ -1,0 +1,11 @@
+{
+  "appId": "com.lenormand.spread",
+  "appName": "雷诺曼牌阵",
+  "webDir": "public/Lenormand",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#1a1a2e"
+  }
+}
